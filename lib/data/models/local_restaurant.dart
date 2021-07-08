@@ -18,8 +18,8 @@ List<LocalRestaurant> parseLocalRestaurants(String json){
   if (json == null){
     return [];
   }
-  final List parsed = jsonDecode(json);
-  return parsed.map((json) => LocalRestaurant.fromJson(json)).toList();
+  final parsed = jsonDecode(json).cast<Map<String, dynamic>>();
+  return parsed.map<LocalRestaurant>((json) => LocalRestaurant.fromJson(json)).toList();
 }
 
 class Restaurants{
@@ -29,7 +29,7 @@ class Restaurants{
   final String pictureId;
   final String city;
   final String rating;
-  // Menus menus;
+  final Menus menus;
 
   Restaurants({
     required this.id,
@@ -38,7 +38,7 @@ class Restaurants{
     required this.pictureId,
     required this.city,
     required this.rating,
-    // required this.menus
+    required this.menus
   });
 
   factory Restaurants.fromJson(Map<String, dynamic>json){
@@ -49,7 +49,7 @@ class Restaurants{
       pictureId: json['pictureId'] as String,
       city: json['city'] as String,
       rating: json['rating'].toString(),
-      // menus: json['menus'],
+      menus: Menus.fromJson(json['menus']),
     );
   }
 }
@@ -58,8 +58,8 @@ List<Restaurants> parseRestaurants(String json){
   if (json == null){
     return [];
   }
-  final List parsed = jsonDecode(json)['restaurants'];
-  return parsed.map((json) => Restaurants.fromJson(json)).toList();
+  final parsed = jsonDecode(json)['restaurants'];
+  return parsed.map<Restaurants>((json) => Restaurants.fromJson(json)).toList();
 }
 
 class Menus{
@@ -83,14 +83,14 @@ class Menus{
   }
 }
 
-List<Menus> parseMenus(String json){
-  if (json == null){
-    return [];
-  }
+// List<Menus> parseMenus(String json){
+//   if (json == null){
+//     return [];
+//   }
 
-  final List parsed = jsonDecode(json)['menus'];
-  return parsed.map((json) => Menus.fromJson(json)).toList();
-}
+//   final parsed = jsonDecode(json).cast<Map<String, dynamic>>();
+//   return parsed.map<Menus>((json) => Menus.fromJson(json)).toList();
+// }
 
 
 

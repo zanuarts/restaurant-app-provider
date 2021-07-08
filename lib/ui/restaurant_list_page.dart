@@ -10,7 +10,7 @@ class RestaurantListPage extends StatelessWidget {
 
   Widget _buildRestaurantItem(BuildContext context, Restaurants restaurant){
     return Material(
-      color: primaryColor,
+      color: Colors.white,
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
         leading: Hero(
