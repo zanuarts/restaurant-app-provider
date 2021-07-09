@@ -1,10 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/common/styles.dart';
-import 'package:restaurant_app/data/models/local_restaurant.dart';
+import 'package:restaurant_app/data/models/list_restaurant.dart';
 import 'package:restaurant_app/ui/home_page.dart';
 import 'package:restaurant_app/ui/restaurant_detail_page.dart';
-import 'package:restaurant_app/ui/restaurant_list_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
           elevation: 0
         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          selectedItemColor: secondaryColor,
+          selectedItemColor: primaryColor,
           unselectedItemColor: Colors.grey
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(

@@ -1,70 +1,55 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/data/models/local_restaurant.dart';
+import 'package:restaurant_app/data/api/api_service.dart';
+import 'package:restaurant_app/data/models/list_restaurant.dart';
 import 'package:restaurant_app/ui/restaurant_detail_page.dart';
+import 'package:restaurant_app/widgets/card_restaurant.dart';
 import 'package:restaurant_app/widgets/platform_widget.dart';
 
-class RestaurantListPage extends StatelessWidget {
-
+class RestaurantListPage extends StatefulWidget {
   static const routeName = '/restaurant_list_page';
 
-  Widget _buildRestaurantItem(BuildContext context, Restaurants restaurant){
-    return Material(
-      color: Colors.white,
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-        leading: Container(
-              width: 100,
-              height: 80,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-              child: Image.network(
-                restaurant.pictureId,
-                width: 100,
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-        title: Text(restaurant.name),
-        subtitle: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: 4, bottom: 2),
-              child: Row(
-                children: [
-                  Icon(Icons.location_on, size: 16.0,),
-                  Text(restaurant.city)
-                ],
-              ),  
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 2, bottom: 4),
-              child:Row(
-                children: [
-                  Icon(Icons.star, size: 16.0,),
-                  Text(restaurant.rating)
-                ],
-              ),
-            )
-            
-          ],
-        ),
-        onTap: (){
-          Navigator.pushNamed(context, RestaurantDetailPage.routeName, arguments: restaurant);
-        },
-      ),
-    );
+  @override
+  _RestaurantListPageState createState() => _RestaurantListPageState();
+}
+
+class _RestaurantListPageState extends State<RestaurantListPage> {
+
+  late Future<ListRestaurant> _listRestaurant;
+
+  @override
+  void initState(){
+    super.initState();
+    _listRestaurant = ApiService().listRestaurant();
   }
   
+
   Widget _buildList(BuildContext context){
-    return FutureBuilder<String>(
-      future: DefaultAssetBundle.of(context).loadString('assets/local_restaurant.json'),
-      builder: (context, snapshot){
-        final List<Restaurants> restaurants = parseRestaurants(snapshot.data.toString());
-        return ListView.builder(
-          itemCount: restaurants.length,
-          itemBuilder: (context, index){
-            return _buildRestaurantItem(context, restaurants[index]);
+    return FutureBuilder(
+      future: _listRestaurant,
+      builder: (context, AsyncSnapshot<ListRestaurant> snapshot){
+        var state = snapshot.connectionState;
+        if (state != ConnectionState.done){
+          return Center(child: CircularProgressIndicator());
+        }
+        else{
+          if(snapshot.hasData){
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: snapshot.data?.restaurants.length,
+              itemBuilder: (context, index){
+                var restaurant = snapshot.data?.restaurants[index];
+                return CardRestaurant(restaurants: restaurant!);
+              },
+            );
           }
-        );
+          else if(snapshot.hasError){
+            return Center(child: Text(snapshot.error.toString()));
+          }
+          else{
+            return Text('');
+          }
+        }
       },
     );
   }
