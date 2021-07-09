@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/data/models/local_restaurant.dart';
+import 'package:restaurant_app/ui/restaurant_detail_page.dart';
 import 'package:restaurant_app/widgets/platform_widget.dart';
 
 class RestaurantListPage extends StatelessWidget {
@@ -13,16 +13,43 @@ class RestaurantListPage extends StatelessWidget {
       color: Colors.white,
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-        leading: Hero(
-          tag: restaurant.pictureId,
-          child: Image.network(
-            restaurant.pictureId,
-            width: 100
-          ),
-        ),
+        leading: Container(
+              width: 100,
+              height: 80,
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+              child: Image.network(
+                restaurant.pictureId,
+                width: 100,
+                fit: BoxFit.fitWidth,
+              ),
+            ),
         title: Text(restaurant.name),
-        subtitle: Text(restaurant.city),
-        onTap: (){},
+        subtitle: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 4, bottom: 2),
+              child: Row(
+                children: [
+                  Icon(Icons.location_on, size: 16.0,),
+                  Text(restaurant.city)
+                ],
+              ),  
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 2, bottom: 4),
+              child:Row(
+                children: [
+                  Icon(Icons.star, size: 16.0,),
+                  Text(restaurant.rating)
+                ],
+              ),
+            )
+            
+          ],
+        ),
+        onTap: (){
+          Navigator.pushNamed(context, RestaurantDetailPage.routeName, arguments: restaurant);
+        },
       ),
     );
   }
