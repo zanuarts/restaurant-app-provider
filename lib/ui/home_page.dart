@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:restaurant_app/data/api/api_service.dart';
+import 'package:restaurant_app/provider/restaurant_provider.dart';
 import 'package:restaurant_app/ui/restaurant_list_page.dart';
 import 'package:restaurant_app/ui/settings_page.dart';
 import 'package:restaurant_app/widgets/platform_widget.dart';
@@ -18,7 +21,10 @@ class _HomePageState extends State<HomePage> {
   static const String _headlineText = 'Restaurant';
 
   List<Widget> _listWidget = [
-    RestaurantListPage(),
+    ChangeNotifierProvider<RestaurantListProvider>(
+      create: (_) => RestaurantListProvider(apiService: ApiService()),
+      child: RestaurantListPage()
+    ),
     SettingsPage()
   ];
 
