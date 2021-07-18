@@ -11,47 +11,51 @@ class CardRestaurant extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color:Colors.white,
-      child:ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical:8.0),
-        leading: Hero(
-          tag: restaurants.pictureId,
-          child: Image.network(
-            restoPicture + restaurants.pictureId,
-            width: 100,
-          ),
-        ),
-        title: Text(
-          restaurants.name,
-        ),
-        subtitle: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: 4, bottom: 2),
-              child: Row(
-                children: [
-                  Icon(Icons.location_on, size: 16.0,),
-                  Text(restaurants.city)
-                ],
-              ),  
+        color: Colors.white,
+        child: ListTile(
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          leading: Hero(
+            tag: restaurants.pictureId,
+            child: Image.network(
+              restoPicture + restaurants.pictureId,
+              width: 100,
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 2, bottom: 4),
-              child:Row(
-                children: [
-                  Icon(Icons.star, size: 16.0,),
-                  Text(restaurants.rating)
-                ],
+          ),
+          title: Text(
+            restaurants.name,
+          ),
+          subtitle: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 4, bottom: 2),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.location_on,
+                      size: 16.0,
+                    ),
+                    Text(restaurants.city)
+                  ],
+                ),
               ),
-            )
-          ],
-        ),
-        onTap: () => Navigator.pushNamed(
-          context,
-          RestaurantDetailPage.routeName,
-          arguments: restaurants
-        ),
-      )
-    );
+              Padding(
+                padding: EdgeInsets.only(top: 2, bottom: 4),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.star,
+                      size: 16.0,
+                    ),
+                    Text(restaurants.rating)
+                  ],
+                ),
+              )
+            ],
+          ),
+          onTap: () => Navigator.pushNamed(
+              context, RestaurantDetailPage.routeName,
+              arguments: restaurants.id),
+        ));
   }
 }
