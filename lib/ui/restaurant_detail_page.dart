@@ -6,6 +6,7 @@ class RestaurantDetailPage extends StatefulWidget {
   static const routeName = '/restaurant_detail';
 
   final Restaurants restaurants;
+  // final String id;
 
   const RestaurantDetailPage({required this.restaurants});
 

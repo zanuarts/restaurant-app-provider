@@ -13,38 +13,40 @@ class RestaurantListPage extends StatefulWidget {
 }
 
 class _RestaurantListPageState extends State<RestaurantListPage> {
-  Widget _buildList(BuildContext context){
+  Widget _buildList(BuildContext context) {
     return Consumer<RestaurantListProvider>(
-      builder: (context, state, _){
-        if (state.state == ResultState.Loading){
-          return Center(child: CircularProgressIndicator());
-        }
-        else if(state.state == ResultState.HasData){
+      builder: (context, state, _) {
+        if (state.state == ResultState.Loading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state.state == ResultState.HasData) {
           return ListView.builder(
             shrinkWrap: true,
             itemCount: state.result.restaurants.length,
-            itemBuilder: (context, index){
+            itemBuilder: (context, index) {
               var restaurant = state.result.restaurants[index];
-              return CardRestaurant(
-                restaurants: restaurant,                
-              );
+              return CardRestaurant(restaurants: restaurant);
             },
           );
+        } else if (state.state == ResultState.NoData) {
+          return Center(
+            child: Text(state.message),
+          );
+        } else if (state.state == ResultState.Error) {
+          return Center(
+            child: Text(state.message),
+          );
+        } else {
+          return Center(
+            child: Text(''),
+          );
         }
-        else if(state.state == ResultState.NoData){
-          return Center(child: Text(state.message));
-        }
-        else if(state.state == ResultState.Error){
-          return Center(child: Text(state.message));
-        }
-        else{
-          return Center(child: Text(''));
-        }
-      }
+      },
     );
   }
 
-  Widget _buildAndroid(BuildContext context){
+  Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Restaurants App'),
@@ -53,7 +55,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
     );
   }
 
-  Widget _buildIos(BuildContext context){
+  Widget _buildIos(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text('Restaurants App'),
