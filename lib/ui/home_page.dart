@@ -22,13 +22,12 @@ class _HomePageState extends State<HomePage> {
 
   List<Widget> _listWidget = [
     ChangeNotifierProvider<RestaurantListProvider>(
-      create: (_) => RestaurantListProvider(apiService: ApiService()),
-      child: RestaurantListPage()
-    ),
+        create: (_) => RestaurantListProvider(apiService: ApiService()),
+        child: RestaurantListPage()),
     SettingsPage()
   ];
 
-  List<BottomNavigationBarItem> _bottomNavBarItems= [
+  List<BottomNavigationBarItem> _bottomNavBarItems = [
     BottomNavigationBarItem(
       icon: Icon(Platform.isIOS ? CupertinoIcons.news : Icons.public),
       label: _headlineText,
@@ -39,16 +38,16 @@ class _HomePageState extends State<HomePage> {
     )
   ];
 
-  void _onBottomNavTapped(int index){
+  void _onBottomNavTapped(int index) {
     setState(() {
       _bottomNavIndex = index;
     });
   }
 
-  Widget _buildAndroid(BuildContext context){
+  Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       body: _listWidget[_bottomNavIndex],
-      bottomNavigationBar:  BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         currentIndex: _bottomNavIndex,
         items: _bottomNavBarItems,
         onTap: _onBottomNavTapped,
@@ -56,21 +55,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildIos(BuildContext context){
+  Widget _buildIos(BuildContext context) {
     return CupertinoTabScaffold(
-      tabBar: CupertinoTabBar(items: _bottomNavBarItems),
-      tabBuilder: (context, index){
-        return _listWidget[index];
-      }
-    );
+        tabBar: CupertinoTabBar(items: _bottomNavBarItems),
+        tabBuilder: (context, index) {
+          return _listWidget[index];
+        });
   }
-
 
   @override
   Widget build(BuildContext context) {
-    return PlatformWidget(
-      androidBuilder: _buildAndroid,
-      iosBuilder: _buildIos
-    );
+    return PlatformWidget(androidBuilder: _buildAndroid, iosBuilder: _buildIos);
   }
 }

@@ -6,7 +6,7 @@ import 'package:restaurant_app/widgets/platform_widget.dart';
 class SettingsPage extends StatelessWidget {
   static const String settingsTitle = 'Settings';
 
-  Widget _buildAndroid(BuildContext context){
+  Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings Page'),
@@ -15,7 +15,7 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildIos(BuildContext context){
+  Widget _buildIos(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text('Settings Page'),
@@ -24,53 +24,51 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildList(BuildContext context){
+  Widget _buildList(BuildContext context) {
     return ListView(
       children: [
         Material(
           child: ListTile(
             title: Text('Dark Theme'),
             trailing: Switch.adaptive(
-              value: false, 
-              onChanged: (value){
-                defaultTargetPlatform == TargetPlatform.iOS
-                  ? showCupertinoDialog(
-                      context: context,
-                      barrierDismissible: true,
-                      builder: (context){
-                        return CupertinoAlertDialog(
-                          title: Text('Coming Soon!'),
-                          content: Text('This feature will be coming soon!'),
-                          actions: [
-                            CupertinoDialogAction(
-                              child: Text('Ok'),
-                              onPressed: (){
-                                Navigator.pop(context);
-                              },
-                            )
-                          ],
-                        );
-                      }
-                    )
-                  : showDialog(
-                    context: context,
-                    builder: (context){
-                      return AlertDialog(
-                        title: Text('Coming Soon'),
-                        content: Text('This feature will be coming soon'),
-                        actions: [
-                          TextButton(
-                            onPressed: (){
-                              Navigator.pop(context);
-                            },
-                            child: Text('Ok'),
-                          )
-                        ],
-                      );
-                    } 
-                  );
-              } 
-            ),
+                value: false,
+                onChanged: (value) {
+                  defaultTargetPlatform == TargetPlatform.iOS
+                      ? showCupertinoDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (context) {
+                            return CupertinoAlertDialog(
+                              title: Text('Coming Soon!'),
+                              content:
+                                  Text('This feature will be coming soon!'),
+                              actions: [
+                                CupertinoDialogAction(
+                                  child: Text('Ok'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                )
+                              ],
+                            );
+                          })
+                      : showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text('Coming Soon'),
+                              content: Text('This feature will be coming soon'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('Ok'),
+                                )
+                              ],
+                            );
+                          });
+                }),
           ),
         )
       ],

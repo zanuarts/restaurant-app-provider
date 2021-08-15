@@ -5,17 +5,16 @@ import 'dart:async';
 
 enum ResultState { Loading, NoData, HasData, Error }
 
-class RestaurantListProvider extends ChangeNotifier{
+class RestaurantListProvider extends ChangeNotifier {
   final ApiService apiService;
 
-  RestaurantListProvider({required this.apiService}){
+  RestaurantListProvider({required this.apiService}) {
     _fetchRestaurantList();
   }
 
   late ListRestaurant _listRestaurant;
   late ResultState _state;
   String _message = '';
-  
 
   String get message => _message;
 
@@ -24,22 +23,20 @@ class RestaurantListProvider extends ChangeNotifier{
   ResultState get state => _state;
 
   Future<dynamic> _fetchRestaurantList() async {
-    try{
+    try {
       _state = ResultState.Loading;
       notifyListeners();
       final restaurantList = await apiService.listRestaurant();
-      if (restaurantList.restaurants.isEmpty){
+      if (restaurantList.restaurants.isEmpty) {
         _state = ResultState.NoData;
         notifyListeners();
         return _message = 'Empty Data';
-      }
-      else{
+      } else {
         _state = ResultState.HasData;
         notifyListeners();
         return _listRestaurant = restaurantList;
       }
-    }
-    catch(e){
+    } catch (e) {
       _state = ResultState.Error;
       notifyListeners();
       return _message = 'Error --> $e';
