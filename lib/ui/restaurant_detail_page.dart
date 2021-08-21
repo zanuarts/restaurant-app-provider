@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
-import 'package:restaurant_app/data/models/list_restaurant.dart';
 import 'package:restaurant_app/data/models/restaurant_detail.dart';
 import 'package:restaurant_app/provider/restaurant_detail_provider.dart';
 
 class RestaurantDetailPage extends StatefulWidget {
   static const routeName = '/restaurant_detail';
 
-  final Restaurants restaurants;
+  final String id;
 
-  const RestaurantDetailPage({required this.restaurants});
+  const RestaurantDetailPage({required this.id});
 
   @override
   RestaurantDetailPageState createState() => RestaurantDetailPageState();
@@ -23,8 +22,8 @@ class RestaurantDetailPageState extends State<RestaurantDetailPage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<RestaurantDetailProvider>(
-      create: (_) => RestaurantDetailProvider(
-          apiService: ApiService(), id: widget.restaurants.id),
+      create: (_) =>
+          RestaurantDetailProvider(apiService: ApiService(), id: widget.id),
       child: Consumer<RestaurantDetailProvider>(
         builder: (context, state, _) {
           if (state.state == ResultState.Loading) {
