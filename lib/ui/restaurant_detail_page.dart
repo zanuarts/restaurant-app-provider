@@ -4,6 +4,7 @@ import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/models/restaurant_detail.dart';
 import 'package:restaurant_app/provider/restaurant_detail_provider.dart';
+import 'package:restaurant_app/widgets/card_reviews.dart';
 
 class RestaurantDetailPage extends StatefulWidget {
   static const routeName = '/restaurant_detail';
@@ -54,7 +55,10 @@ class RestaurantDetailPageState extends State<RestaurantDetailPage> {
   Widget detailPage(BuildContext context, Restaurant restaurant) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Restaurant App'),
+        title: Text(
+          'Restaurant App',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -77,7 +81,21 @@ class RestaurantDetailPageState extends State<RestaurantDetailPage> {
                     )
                   ]),
                   SizedBox(
-                    height: 24,
+                    height: 9,
+                  ),
+                  Row(
+                    children: [
+                      for (var item in restaurant.categories)
+                        Padding(
+                          padding: EdgeInsets.all(3),
+                          child: Chip(
+                            label: Text(item.name),
+                          ),
+                        ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 9,
                   ),
                   Text('Tentang Restaurant', style: myTextTheme.bodyText1),
                   Text(
@@ -164,6 +182,19 @@ class RestaurantDetailPageState extends State<RestaurantDetailPage> {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    height: 24,
+                  ),
+                  Text(
+                    'Review',
+                    style: myTextTheme.bodyText1,
+                  ),
+                  Column(
+                    children: [
+                      for (var item in restaurant.customerReviews)
+                        CardReviews(reviews: item),
+                    ],
+                  )
                 ],
               ),
             )

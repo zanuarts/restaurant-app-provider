@@ -61,7 +61,7 @@ class _CardRestaurantState extends State<CardRestaurant> {
         ),
         onTap: () {
           Navigator.pushNamed(context, RestaurantDetailPage.routeName,
-              arguments: widget.restaurants);
+              arguments: widget.restaurants.id);
         },
       ),
     );

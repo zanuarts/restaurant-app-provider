@@ -154,7 +154,7 @@ class CustomerReviews {
   factory CustomerReviews.fromJson(Map<String, dynamic> json) {
     return CustomerReviews(
         name: json['name'] as String,
-        review: json['name'] as String,
+        review: json['review'] as String,
         date: json['date'] as String);
   }
 }
