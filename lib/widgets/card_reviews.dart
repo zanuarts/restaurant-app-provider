@@ -15,10 +15,16 @@ class CardReviews extends StatelessWidget {
             const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         title: Text(reviews.name),
         subtitle: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(reviews.date),
-            Text(reviews.review),
+            Padding(
+              padding: const EdgeInsets.only(top: 4.0),
+              child: Text(reviews.date),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4.0),
+              child: Text(reviews.review),
+            ),
           ],
         ),
       ),
