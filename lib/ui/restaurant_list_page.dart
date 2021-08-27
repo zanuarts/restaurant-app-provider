@@ -137,7 +137,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
           );
         } else {
           return Center(
-            child: Text(''),
+            child: Text('No Result'),
           );
         }
       },

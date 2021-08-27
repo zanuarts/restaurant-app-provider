@@ -25,28 +25,29 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
       child: Consumer<RestaurantSearchProvider>(
         builder: (context, state, _) {
           if (state.state == ResultState.Loading) {
-            print(state.state);
             return Center(
               child: CircularProgressIndicator(),
             );
           } else if (state.state == ResultState.HasData) {
-            print(state.result.founded);
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: state.result.restaurants.length,
-              itemBuilder: (context, index) {
-                var resto = state.result.restaurants[index];
-
-                return CardSearch(resto: resto);
-              },
-            );
+            if (state.result.restaurants.length == 0) {
+              return Center(
+                child: Text('Tidak ada hasil yang ditemukan'),
+              );
+            } else {
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: state.result.restaurants.length,
+                itemBuilder: (context, index) {
+                  var resto = state.result.restaurants[index];
+                  return CardSearch(resto: resto);
+                },
+              );
+            }
           } else if (state.state == ResultState.NoData) {
-            print(state.state);
             return Center(
               child: Text(state.message),
             );
           } else if (state.state == ResultState.Error) {
-            print(state.state);
             return Center(
               child: Text(state.message),
             );
@@ -64,7 +65,10 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(),
-        title: Text('Search Result'),
+        title: Text(
+          'Search Result',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: _buildList(context),
     );

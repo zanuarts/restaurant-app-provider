@@ -32,6 +32,10 @@ class _HomePageState extends State<HomePage> {
       label: 'Restaurant',
     ),
     BottomNavigationBarItem(
+        icon: Icon(
+            Platform.isIOS ? CupertinoIcons.square_favorites : Icons.favorite),
+        label: 'Favorite'),
+    BottomNavigationBarItem(
       icon: Icon(Platform.isIOS ? CupertinoIcons.settings : Icons.settings),
       label: 'Settings',
     )

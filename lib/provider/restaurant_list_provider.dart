@@ -39,7 +39,7 @@ class RestaurantListProvider extends ChangeNotifier {
     } catch (e) {
       _state = ResultState.Error;
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message = 'Tidak ada koneksi internet';
     }
   }
 }
