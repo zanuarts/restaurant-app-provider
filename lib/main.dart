@@ -1,51 +1,83 @@
+import 'dart:io';
+
+import 'package:android_alarm_manager/android_alarm_manager.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/common/styles.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:provider/provider.dart';
+import 'package:restaurant_app/common/navigation.dart';
+import 'package:restaurant_app/data/api/api_service.dart';
+import 'package:restaurant_app/data/preferences/preferences_helper.dart';
+import 'package:restaurant_app/provider/preferences_provider.dart';
+import 'package:restaurant_app/provider/restaurant_list_provider.dart';
+import 'package:restaurant_app/provider/scheduling_provider.dart';
 import 'package:restaurant_app/ui/home_page.dart';
 import 'package:restaurant_app/ui/restaurant_detail_page.dart';
 import 'package:restaurant_app/ui/restaurant_search_page.dart';
+import 'package:restaurant_app/utils/background_service.dart';
+import 'package:restaurant_app/utils/notification_helper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final NotificationHelper _notificationHelper = NotificationHelper();
+  final BackgroundService _service = BackgroundService();
+
+  _service.initializeIsolate();
+
+  if (Platform.isAndroid) {
+    await AndroidAlarmManager.initialize();
+  }
+  await _notificationHelper.initNotifications(flutterLocalNotificationsPlugin);
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor: primaryColor,
-        accentColor: secondaryColor,
-        scaffoldBackgroundColor: Colors.white,
-        textTheme: myTextTheme,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        appBarTheme: AppBarTheme(
-            textTheme: myTextTheme.apply(bodyColor: Colors.black),
-            elevation: 0),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            selectedItemColor: primaryColor, unselectedItemColor: Colors.grey),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            primary: secondaryColor,
-            textStyle: TextStyle(),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(0),
-              ),
-            ),
-          ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => RestaurantListProvider(apiService: ApiService()) 
         ),
+        ChangeNotifierProvider(create: (_) => SchedulingProvider()),
+        ChangeNotifierProvider(create: (_) => PreferencesProvider(preferencesHelper: PreferencesHelper(sharedPreferences: SharedPreferences.getInstance())))
+      ],
+      child: Consumer<PreferencesProvider>(
+        builder: (context, provider, child) {
+          return MaterialApp(
+            title: 'Resto App',
+            theme: provider.themeData,
+            builder: (context, child){
+              return CupertinoTheme(
+                data: CupertinoThemeData(
+                  brightness: 
+                    provider.isDarkTheme ? Brightness.dark : Brightness.light
+                ),
+                child: Material(
+                  child: child,
+                )
+              );
+            },
+            navigatorKey: navigatorKey,
+            initialRoute: HomePage.routeName,
+            routes: {
+              HomePage.routeName: (context) => HomePage(),
+              RestaurantDetailPage.routeName: (context) => RestaurantDetailPage(
+                    id: ModalRoute.of(context)!.settings.arguments as String,
+                  ),
+              RestaurantSearchPage.routeName: (context) => RestaurantSearchPage(
+                    query: ModalRoute.of(context)!.settings.arguments as String,
+                  ),
+            },
+          );
+        }
       ),
-      initialRoute: HomePage.routeName,
-      routes: {
-        HomePage.routeName: (context) => HomePage(),
-        RestaurantDetailPage.routeName: (context) => RestaurantDetailPage(
-              id: ModalRoute.of(context)!.settings.arguments as String,
-            ),
-        RestaurantSearchPage.routeName: (context) => RestaurantSearchPage(
-              query: ModalRoute.of(context)!.settings.arguments as String,
-            ),
-      },
     );
   }
 }

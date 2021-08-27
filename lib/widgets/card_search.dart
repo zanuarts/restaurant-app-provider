@@ -18,7 +18,6 @@ class _CardSearchState extends State<CardSearch> {
   Widget build(BuildContext context) {
     print(widget.resto);
     return Material(
-      color: Colors.white,
       child: ListTile(
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),

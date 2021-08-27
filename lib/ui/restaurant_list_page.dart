@@ -17,6 +17,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
   late TextEditingController _searchQuery;
   bool _isSearching = false;
   String searchQuery = 'Search query';
+  final List<String> favoriteResto = [];
 
   @override
   void initState() {
@@ -86,7 +87,6 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
   Widget _buildTitle(BuildContext context) {
     return Text(
       'Restaurant App',
-      style: TextStyle(color: Colors.white),
     );
   }
 
@@ -117,7 +117,14 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
             itemCount: state.result.restaurants.length,
             itemBuilder: (context, index) {
               var restaurant = state.result.restaurants[index];
-              return CardRestaurant(restaurants: restaurant);
+              return CardRestaurant(
+                  restaurants: restaurant,
+                  isFavorite: favoriteResto.contains(restaurant),
+                  onClick: () {
+                    setState(() {
+                      favoriteResto.add(restaurant.id);
+                    },);
+                  },);
             },
           );
         } else if (state.state == ResultState.NoData) {

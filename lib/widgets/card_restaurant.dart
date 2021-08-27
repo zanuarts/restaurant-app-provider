@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/data/models/list_restaurant.dart';
 import 'package:restaurant_app/ui/restaurant_detail_page.dart';
 
 class CardRestaurant extends StatefulWidget {
   final Restaurants restaurants;
+  final bool isFavorite;
+  final VoidCallback onClick;
 
-  const CardRestaurant({required this.restaurants});
+  const CardRestaurant({
+    required this.restaurants,
+    required this.isFavorite,
+    required this.onClick,
+  });
 
   @override
   _CardRestaurantState createState() => _CardRestaurantState();
@@ -17,7 +24,6 @@ class _CardRestaurantState extends State<CardRestaurant> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
       child: ListTile(
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -31,6 +37,9 @@ class _CardRestaurantState extends State<CardRestaurant> {
         title: Text(
           widget.restaurants.name,
         ),
+        trailing: widget.isFavorite
+            ? IconButton(onPressed: widget.onClick, icon: Icon(Icons.favorite))
+            : Icon(Icons.favorite_border_outlined),
         subtitle: Column(
           children: [
             Padding(
@@ -59,10 +68,8 @@ class _CardRestaurantState extends State<CardRestaurant> {
             )
           ],
         ),
-        onTap: () {
-          Navigator.pushNamed(context, RestaurantDetailPage.routeName,
-              arguments: widget.restaurants.id);
-        },
+        onTap: () => Navigation.intentWithData(
+            RestaurantDetailPage.routeName, widget.restaurants.id),
       ),
     );
   }

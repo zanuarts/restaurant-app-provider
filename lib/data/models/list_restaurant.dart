@@ -22,6 +22,13 @@ class ListRestaurant {
         count: json['count'].toString(),
         restaurants: restoList);
   }
+
+  Map<String, dynamic> toJson() => {
+        "error": error,
+        "message": message,
+        "count": count,
+        "restaurants": List<dynamic>.from(restaurants.map((x) => x.toJson()))
+      };
 }
 
 List<ListRestaurant> parseListRestaurant(String json) {
@@ -56,6 +63,14 @@ class Restaurants {
         city: json['city'] as String,
         rating: json['rating'].toString());
   }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "description": description,
+        "pictureId": pictureId,
+        "city": city,
+        "rating": rating,
+      };
 }
 
 List<Restaurants> parseRestaurants(String json) {

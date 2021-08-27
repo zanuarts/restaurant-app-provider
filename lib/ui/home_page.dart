@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:restaurant_app/data/api/api_service.dart';
-import 'package:restaurant_app/provider/restaurant_list_provider.dart';
+// import 'package:restaurant_app/ui/favorite_page.dart';
+import 'package:restaurant_app/ui/restaurant_detail_page.dart';
 import 'package:restaurant_app/ui/restaurant_list_page.dart';
 import 'package:restaurant_app/ui/settings_page.dart';
+import 'package:restaurant_app/utils/notification_helper.dart';
 import 'package:restaurant_app/widgets/platform_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,13 +17,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final NotificationHelper _notificationHelper = NotificationHelper();
   int _bottomNavIndex = 0;
 
   List<Widget> _listWidget = [
-    ChangeNotifierProvider<RestaurantListProvider>(
-        create: (_) => RestaurantListProvider(apiService: ApiService()),
-        child: RestaurantListPage()),
-    SettingsPage()
+    RestaurantListPage(),
+    // FavoritePage(),
+    SettingsPage(),
   ];
 
   List<BottomNavigationBarItem> _bottomNavBarItems = [
@@ -36,6 +36,19 @@ class _HomePageState extends State<HomePage> {
       label: 'Settings',
     )
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _notificationHelper
+        .configureSelectNotificationSubject(RestaurantDetailPage.routeName);
+  }
+
+  @override
+  void dispose() {
+    selectNotificationSubject.close();
+    super.dispose();
+  }
 
   void _onBottomNavTapped(int index) {
     setState(() {

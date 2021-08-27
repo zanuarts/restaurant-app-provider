@@ -73,13 +73,15 @@ class RestaurantDetailPageState extends State<RestaurantDetailPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(restaurant.name, style: myTextTheme.headline3),
-                  Row(children: [
-                    Icon(Icons.location_on),
-                    Text(
-                      restaurant.city,
-                      style: myTextTheme.subtitle1,
-                    )
-                  ]),
+                  Row(
+                    children: [
+                      Icon(Icons.location_on),
+                      Text(
+                        restaurant.city,
+                        style: myTextTheme.subtitle1,
+                      )
+                    ],
+                  ),
                   SizedBox(
                     height: 9,
                   ),
@@ -87,9 +89,13 @@ class RestaurantDetailPageState extends State<RestaurantDetailPage> {
                     children: [
                       for (var item in restaurant.categories)
                         Padding(
-                          padding: EdgeInsets.all(3),
+                          padding: EdgeInsets.all(
+                            3,
+                          ),
                           child: Chip(
-                            label: Text(item.name),
+                            label: Text(
+                              item.name,
+                            ),
                           ),
                         ),
                     ],
@@ -117,19 +123,28 @@ class RestaurantDetailPageState extends State<RestaurantDetailPage> {
                         for (var item in restaurant.menus.foods)
                           Card(
                             child: InkWell(
-                              splashColor: Colors.blue.withAlpha(30),
+                              splashColor: Colors.blue.withAlpha(
+                                30,
+                              ),
                               onTap: () {
                                 print('Card tapped.');
                                 print(item.name);
                               },
                               child: Container(
-                                padding: const EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(
+                                  8,
+                                ),
                                 width: 140.0,
                                 child: Column(
                                   children: [
-                                    Image.asset('assets/images/fast-food.png',
-                                        height: 80, fit: BoxFit.fitHeight),
-                                    SizedBox(height: 8),
+                                    Image.asset(
+                                      'assets/images/fast-food.png',
+                                      height: 80,
+                                      fit: BoxFit.fitHeight,
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
                                     Text(
                                       item.name,
                                       style: Theme.of(context).textTheme.button,
@@ -167,8 +182,11 @@ class RestaurantDetailPageState extends State<RestaurantDetailPage> {
                                 width: 140.0,
                                 child: Column(
                                   children: [
-                                    Image.asset('assets/images/fast-food.png',
-                                        height: 80, fit: BoxFit.fitHeight),
+                                    Image.asset(
+                                      'assets/images/fast-food.png',
+                                      height: 80,
+                                      fit: BoxFit.fitHeight,
+                                    ),
                                     SizedBox(height: 8),
                                     Text(
                                       item.name,
