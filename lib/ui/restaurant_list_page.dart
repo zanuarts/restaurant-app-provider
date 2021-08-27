@@ -118,13 +118,8 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
             itemBuilder: (context, index) {
               var restaurant = state.result.restaurants[index];
               return CardRestaurant(
-                  restaurants: restaurant,
-                  isFavorite: favoriteResto.contains(restaurant),
-                  onClick: () {
-                    setState(() {
-                      favoriteResto.add(restaurant.id);
-                    },);
-                  },);
+                restaurants: restaurant,
+              );
             },
           );
         } else if (state.state == ResultState.NoData) {
