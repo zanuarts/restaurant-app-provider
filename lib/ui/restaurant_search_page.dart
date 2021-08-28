@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/provider/restaurant_search_provider.dart';
+import 'package:restaurant_app/utils/result_state.dart';
 import 'package:restaurant_app/widgets/card_search.dart';
 import 'package:restaurant_app/widgets/platform_widget.dart';
 
@@ -39,7 +40,7 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
                 itemCount: state.result.restaurants.length,
                 itemBuilder: (context, index) {
                   var resto = state.result.restaurants[index];
-                  return CardSearch(resto: resto);
+                  return CardSearch(restaurants: resto);
                 },
               );
             }

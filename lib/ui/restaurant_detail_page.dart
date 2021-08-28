@@ -4,6 +4,7 @@ import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/models/restaurant_detail.dart';
 import 'package:restaurant_app/provider/restaurant_detail_provider.dart';
+import 'package:restaurant_app/utils/result_state.dart';
 import 'package:restaurant_app/widgets/card_reviews.dart';
 
 class RestaurantDetailPage extends StatefulWidget {

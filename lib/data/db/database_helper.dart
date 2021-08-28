@@ -18,14 +18,15 @@ class DatabaseHelper {
     var db = openDatabase(
       '$path/restoapp.db',
       onCreate: (db, version) async {
-        await db.execute('''CREATE TABLE $_tblFavorite(
+        await db.execute('''CREATE TABLE $_tblFavorite (
             id TEXT PRIMARY KEY,
             name TEXT,
             description TEXT,
             pictureId TEXT,
             city TEXT,
-            rating TEXT,
-          )''');
+            rating TEXT
+          )
+        ''');
       },
       version: 1,
     );

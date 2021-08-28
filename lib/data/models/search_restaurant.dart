@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:restaurant_app/data/models/list_restaurant.dart';
+
 class SearchRestaurant {
   final String error;
   final String founded;
@@ -27,36 +29,4 @@ List<Restaurants> parseSearchRestaurants(String json) {
   return parsed
       .map<SearchRestaurant>((json) => SearchRestaurant.fromJson(json))
       .toList();
-}
-
-class Restaurants {
-  final String id;
-  final String name;
-  final String description;
-  final String pictureId;
-  final String city;
-  final String rating;
-
-  Restaurants(
-      {required this.id,
-      required this.name,
-      required this.description,
-      required this.pictureId,
-      required this.city,
-      required this.rating});
-
-  factory Restaurants.fromJson(Map<String, dynamic> json) {
-    return Restaurants(
-        id: json['id'] as String,
-        name: json['name'] as String,
-        description: json['description'] as String,
-        pictureId: json['pictureId'] as String,
-        city: json['city'] as String,
-        rating: json['rating'].toString());
-  }
-}
-
-List<Restaurants> parseRestaurants(String json) {
-  final parsed = jsonDecode(json).cast<Map<String, dynamic>>();
-  return parsed.map<Restaurants>((json) => Restaurants.fromJson(json)).toList();
 }

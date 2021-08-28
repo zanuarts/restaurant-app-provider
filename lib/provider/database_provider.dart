@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:restaurant_app/data/db/database_helper.dart';
 import 'package:restaurant_app/data/models/list_restaurant.dart';
-import 'package:restaurant_app/provider/restaurant_detail_provider.dart';
+import 'package:restaurant_app/utils/result_state.dart';
 
 class DatabaseProvider extends ChangeNotifier {
   final DatabaseHelper databaseHelper;

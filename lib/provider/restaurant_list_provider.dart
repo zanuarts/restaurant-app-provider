@@ -3,7 +3,7 @@ import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/models/list_restaurant.dart';
 import 'dart:async';
 
-enum ResultState { Loading, NoData, HasData, Error }
+import 'package:restaurant_app/utils/result_state.dart';
 
 class RestaurantListProvider extends ChangeNotifier {
   final ApiService apiService;
