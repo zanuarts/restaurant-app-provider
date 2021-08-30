@@ -9,8 +9,12 @@ import 'package:restaurant_app/data/models/search_restaurant.dart';
 class ApiService {
   static final String _baseUrl = 'https://restaurant-api.dicoding.dev/';
 
+  http.Client client;
+
+  ApiService(this.client);
+
   Future<ListRestaurant> listRestaurant() async {
-    final response = await http.get(Uri.parse(_baseUrl + 'list'));
+    final response = await client.get(Uri.parse(_baseUrl + 'list'));
     if (response.statusCode == 200) {
       return ListRestaurant.fromJson(json.decode(response.body));
     } else {
@@ -19,7 +23,7 @@ class ApiService {
   }
 
   Future<RestaurantDetail> detailRestaurant(String id) async {
-    final response = await http.get(Uri.parse(_baseUrl + 'detail/' + id));
+    final response = await client.get(Uri.parse(_baseUrl + 'detail/' + id));
     if (response.statusCode == 200) {
       return RestaurantDetail.fromJson(json.decode(response.body));
     } else {

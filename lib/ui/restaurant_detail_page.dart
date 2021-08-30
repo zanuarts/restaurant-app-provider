@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
@@ -25,7 +26,7 @@ class RestaurantDetailPageState extends State<RestaurantDetailPage> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<RestaurantDetailProvider>(
       create: (_) =>
-          RestaurantDetailProvider(apiService: ApiService(), id: widget.id),
+          RestaurantDetailProvider(apiService: ApiService(Client()), id: widget.id),
       child: Consumer<RestaurantDetailProvider>(
         builder: (context, state, _) {
           if (state.state == ResultState.Loading) {

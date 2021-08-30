@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/provider/restaurant_search_provider.dart';
@@ -22,7 +23,7 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
   Widget _buildList(BuildContext context) {
     return ChangeNotifierProvider<RestaurantSearchProvider>(
       create: (_) => RestaurantSearchProvider(
-          apiService: ApiService(), query: widget.query),
+          apiService: ApiService(Client()), query: widget.query),
       child: Consumer<RestaurantSearchProvider>(
         builder: (context, state, _) {
           if (state.state == ResultState.Loading) {
